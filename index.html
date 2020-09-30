@@ -267,7 +267,9 @@
 	    tt = setInterval(function(){
 		//drawRegionsMap();
 		time = time + 1; 		
-		data = google.visualization.arrayToDataTable(arr[time]);
+		//data = google.visualization.arrayToDataTable(arr[time]);
+		dayArr = get_day_data(all_data,time);
+		var data = google.visualization.arrayToDataTable(dayArr);
 		chart.draw(data, options);
 		}, 2000);
 		
