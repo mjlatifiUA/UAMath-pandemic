@@ -25,6 +25,11 @@
 	function get_day_data(data, day)
 	    {
 		    var x = new Date(2020,1,21);
+		    
+		    var date = new Date(2020,1,21);
+		    date.setDate(date.getDate()+day);
+    		    var str = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
+		    
 		    x.setDate(x.getDate()+day);
 		    //var Y = x.getYear()+1900;
 		    //var M = x.getMonth();
@@ -32,7 +37,7 @@
 		    
 		    
 		    //var str = Y.toString()+"-"+M.toString()+"-"+D.toString();
-		    var str = x.toISOString().substr(0,10)
+		    //var str = x.toISOString().substr(0,10)
 		    var res = [['Country', 'Cases']];
 		    all_data.forEach(function(row){
 			    if (row.date == str)
