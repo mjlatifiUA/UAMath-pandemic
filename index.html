@@ -14,7 +14,7 @@
 	
 	    
 	var all_data; 
-	$.getJSON('us-data.json', function(data) {
+	$.getJSON('world_covid_data.json', function(data) {
     // JSON result in `data` variable
 	console.log("DATA RECIEVED--------------------");
 	console.log(data);
@@ -33,10 +33,10 @@
 		    
 		    //var str = Y.toString()+"-"+M.toString()+"-"+D.toString();
 		    var str = x.toISOString().substr(0,10)
-		    var res = [['State', 'Cases']];
+		    var res = [['Country', 'Cases']];
 		    all_data.forEach(function(row){
 			    if (row.date == str)
-				    res.push([row.state, row.cases]);
+				    res.push([row.location, row.total_cases]);
 		    });
 		    
 		    return res;
@@ -67,8 +67,8 @@
 		time = time+1;
 		
         var options = {
-		 region: 'US', 
-		displayMode: 'markers',
+		// region: 'US', 
+		//displayMode: 'markers',
 		 colorAxis: {colors: ['green', 'red']}, 
 		  animation:{
 			duration: 1000,
