@@ -192,11 +192,32 @@
 [ 'United States',  436  ]]
 ];
 	
+	    
+	var all_data; 
 	$.getJSON('us-data.json', function(data) {
     // JSON result in `data` variable
 	console.log("DATA RECIEVED--------------------");
 	console.log(data);
+	all_data = data;
 	});
+	    
+	    
+	function get_day_data(data, day)
+	    {
+		    var x = Date(2020,1,21);
+		    x.setDate(x.getDate()+day);
+		    var Y = x.getYear()+1900;
+		    var M = x.getMonth();
+		    var D = x.getDay();
+		    var str = Y.toString()+"-"+M.toString()+"-"D.toString();
+		    var res = [['State', 'Cases']];
+		    all_data.forEach(function(row){
+			    if (row.date == str)
+				    res.push([row.state, row.cases]);
+		    });
+		    
+		    return res;
+	    }
 
 	  time = 0
 	  first = true
@@ -218,10 +239,12 @@
 		console.log(arr[time][0][1])
 		console.log(arr[time][1][1])
 		console.log(arr[time][2][1])
-		var data = google.visualization.arrayToDataTable(arr[time]);
+	      	dayArr = get_day_data(all_data,time);
+		var data = google.visualization.arrayToDataTable(dayArr);
 		time = time+1;
 		
         var options = {
+		 region: 'US', 
 		 colorAxis: {colors: ['green', 'red']}, 
 		  animation:{
 			duration: 1000,
@@ -243,7 +266,7 @@
 		time = time + 1; 		
 		data = google.visualization.arrayToDataTable(arr[time]);
 		chart.draw(data, options);
-		}, 1000);
+		}, 2000);
 		
       }
 	  
