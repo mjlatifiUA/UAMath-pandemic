@@ -46,7 +46,7 @@
 			    return [];
 		    all_data.forEach(function(row){
 			    if (row.date == str)
-				    res.push([row.location, row.total_cases]);
+				    res.push([row.location, row.new_cases_smoothed]);
 		    });
 		    
 		    return res;
