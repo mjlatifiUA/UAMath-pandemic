@@ -24,20 +24,21 @@
 	    
 	function get_day_data(data, day)
 	    {
-		    var x = new Date(2019,12,1);
+		    //var x = new Date(2019,12,1);
 		    
-		    var date = new Date(2019,12,31);
-		    date.setDate(date.getDate()+day);
-    		    var str = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
+		    var x = new Date(2019,12,31);
+		    x.setDate(x.getDate()+day);
+    		    //var str = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
 		    //str = "6/16/2020";
 		    ///x.setDate(x.getDate()+day);
 		    
-		    //var Y = x.getYear()+1900;
-		    //var M = x.getMonth();
-		    //var D = x.getDay();
+		    var Y = x.getYear()+1900;
+		    var M = x.getMonth();
+		    var D = x.getDay();
 		    
 		    
 		    //var str = Y.toString()+"-"+M.toString()+"-"+D.toString();
+		    var str = M.toString()+"/"+D.toString()+"/"+ Y.toString();
 		    //var str = x.toISOString().substr(0,10)
 		    var res = [['Country', 'Cases']];
 		    
