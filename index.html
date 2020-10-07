@@ -53,9 +53,16 @@
 		    
 		    if(all_data == null)
 			    return [];
+		    
 		    all_data.forEach(function(row){
 			    if (row.date == str)
+			    {
 				    res.push([row.location, Math.log( row.total_cases+1)/Math.log(10)]);
+				    console.log(row.location);
+				    console.log(row.total_cases);
+				    console.log(Math.log( row.total_cases+1)/Math.log(10));
+				    
+			    }
 		    });
 		    
 		    return res;
