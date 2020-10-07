@@ -48,13 +48,13 @@
 		    //var str = Y.toString()+"-"+M.toString()+"-"+D.toString();
 		    var str = M.toString()+"/"+D.toString()+"/"+ Y.toString();
 		    //var str = x.toISOString().substr(0,10)
-		    var res = [['Country', 'Cases'], ['fake', 14]];
+		    var res = [['Country', 'Cases'], ['fake', 7]];
 		    
 		    if(all_data == null)
 			    return [];
 		    all_data.forEach(function(row){
 			    if (row.date == str)
-				    res.push([row.location, Math.log( row.total_cases+1)]);
+				    res.push([row.location, Math.log( row.total_cases+1)/Math.log(10)]);
 		    });
 		    
 		    return res;
@@ -87,7 +87,7 @@
         var options = {
 		// region: 'US', 
 		//displayMode: 'markers',
-		 colorAxis: {colors: ['green', 'red']}, 
+		 colorAxis: {colors: ['gray', 'red']}, 
 		  animation:{
 			duration: 1000,
 			easing: 'out'
