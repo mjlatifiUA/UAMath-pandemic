@@ -108,6 +108,7 @@
 		time = time + 1; 		
 		//data = google.visualization.arrayToDataTable(arr[time]);
 		dayArr = get_day_data(all_data,time);
+		$('#date_value').val(time);
 		var data = google.visualization.arrayToDataTable(dayArr);
 		chart.draw(data, options);
 		}, 1000);
@@ -164,7 +165,7 @@
 </div>
   
 <div id="regions_div" style="width: 100%; height: 500px;"></div>
-	
+<div><input id="date_value" value=""></div>
 <footer class="container-fluid text-center">
   <p>This project is supported by a force in @nature.</p>
 </footer>
