@@ -3477,7 +3477,7 @@
 	  time = 0
 	  first = true
 	  var view_mode = 'us-sim'; // 'world-data' 
-	  var is_playing = 1;
+	  var is_playing = 0;
       function drawRegionsMap() {
 
 		
@@ -3581,9 +3581,16 @@
 	    
 	 $("#btn-play").click(function(){
 	    if(is_playing==0)
+	    {
 		is_playing = 1;
+		$("#btn-play").text('Pause');
+	    }
 	    else
+	    {
 		is_playing = 0; 
+		$("#btn-play").text('Play');
+
+	    }
 		 
 	  });
 	    
@@ -3645,7 +3652,7 @@
   
 <div id="regions_div" style="width: 100%; height: 500px;"></div>
 <div class="container text-center">
-	<button id="btn-play" type="button" class="btn btn-secondary">Play/Pause</button>
+	<button id="btn-play" type="button" class="btn btn-secondary">Play</button>
 	<button id="btn-world-data" type="button" class="btn btn-primary">Covid World Spread</button>
 	<button id="btn-US-simulation" type="button" class="btn btn-primary">US Simulation</button>
 </div>
