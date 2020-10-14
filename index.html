@@ -23,7 +23,8 @@
 		arr = [];
 	
 	var all_data;
-	var all_data=[
+	var all_data_world;
+	var all_data_sim001=[
 [['State', 'Infection'],
 ['US-AB',  0  ], 
 ['US-AK',  0  ], 
@@ -3426,12 +3427,12 @@
 ],
 ]; 
 	    
-	//$.getJSON('world_covid_data.json', function(data) {
-	$.getJSON('simulation-001.json', function(data) {
+	$.getJSON('world_covid_data.json', function(data) {
+	//$.getJSON('simulation-001.json', function(data) {
     // JSON result in `data` variable
 	console.log("DATA RECIEVED--------------------");
 	//console.log(data);
-	all_data = data;
+	all_data_world = data;
 	});
 	    
 	    
@@ -3512,11 +3513,11 @@
 	 function draw_US(){
 		//drawRegionsMap();
 		time = time + 1; 		
-		var data = google.visualization.arrayToDataTable(all_data[time]);
+		var data = google.visualization.arrayToDataTable(all_data_sim001[time]);
 		var s =""
 		for (i=0; i< all_data[time].length; i++)
 		{
-			s = s+ all_data[time][i][0] + ': '+ all_data[time][i][1];
+			s = s+ all_data_sim001[time][i][0] + ': '+ all_data_sim001[time][i][1];
 			//console.log(all_data[time][i][0]);
 		        //console.log(all_data[time][i][1]);
 		}
@@ -3535,7 +3536,7 @@
 	 function draw_World(){
 		    
 		time = time + 1; 		
-		dayArr = get_day_data(all_data,time);
+		dayArr = get_day_data(all_data_world,time);
 		
 		var data = google.visualization.arrayToDataTable(dayArr);
 		 
@@ -3551,17 +3552,24 @@
           }
 	  
 	  draw_US();
+	    
 	  view_timer = setInterval(draw_US, 5000);
-	      $("#btn-world-data").click(function(){
+	    
+	    
+	 $("#btn-world-data").click(function(){
 	    window.clearInterval(view_timer);
+	    all_data = all_data_world;
+	    draw_World();
 	    timer = 0
-	    view_timer = setInterval(draw_US, 5000);
+	    view_timer = setInterval(draw_World, 5000);
 	  });
 		
 	 $("#btn-US-simulation").click(function(){
+	    all_data = all_data_sim001;
 	    window.clearInterval(view_timer);
+	    draw_US();
 	    timer = 0;
-	    view_timer = setInterval(draw_World, 5000);
+	    view_timer = setInterval(draw_US, 5000);
 	  });
 	}
 	    
