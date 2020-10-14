@@ -22,8 +22,8 @@
       google.charts.setOnLoadCallback(drawRegionsMap);
 		arr = [];
 	
-	    
-	var all_data=[
+	var all_data;
+	var all_data2=[
 [['State', 'Infection'],
 ['US-AB',  0  ], 
 ['US-AK',  0  ], 
@@ -3430,7 +3430,7 @@
 	$.getJSON('simulation-001.json', function(data) {
     // JSON result in `data` variable
 	console.log("DATA RECIEVED--------------------");
-	console.log(data);
+	//console.log(data);
 	all_data = data;
 	});
 	    
@@ -3583,6 +3583,11 @@
 </div>
   
 <div id="regions_div" style="width: 100%; height: 500px;"></div>
+<div class="container text-center">
+	<button type="button" class="btn btn-primary">Covid World Spread</button>
+	<button type="button" class="btn btn-primary">US Simulation</button>
+	<button type="button" class="btn btn-primary">Multi Scale</button>
+</div>
  <div class="container text-center"><input id="date_value" value=""></div>
 <footer class="container-fluid text-center">
   <p>This project is supported by a force in @nature.</p>
