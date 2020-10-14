@@ -3552,11 +3552,7 @@
 	  
 	  draw_US();
 	  view_timer = setInterval(draw_US, 5000);
-	    
-	    
-	    
-	$(document).ready(function(){
-	  $("#btn-world-data").click(function(){
+	      $("#btn-world-data").click(function(){
 	    window.clearInterval(view_timer);
 	    timer = 0
 	    view_timer = setInterval(draw_US, 5000);
@@ -3567,8 +3563,13 @@
 	    timer = 0;
 	    view_timer = setInterval(draw_World, 5000);
 	  });
+	}
+	    
+	    
+	//$(document).ready(function(){
+	
 		
-	});
+	//});
 
     </script>
   <style>
