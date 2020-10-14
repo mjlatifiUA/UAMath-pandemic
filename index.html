@@ -3515,11 +3515,12 @@
 		//drawRegionsMap();
 		time = time + 1; 		
 		data = google.visualization.arrayToDataTable(all_data[time]);
+		    console.log(data);
 		//dayArr = get_day_data(all_data,time);
 		
 		var data = google.visualization.arrayToDataTable(dayArr);
 		chart.draw(data, options);
-		}, 200);
+		}, 1000);
 		
       }
 	  
