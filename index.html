@@ -3477,6 +3477,7 @@
 	  time = 0
 	  first = true
 	  var view_mode = 'us-sim'; // 'world-data' 
+	  var is_playing = 1;
       function drawRegionsMap() {
 
 		
@@ -3512,6 +3513,9 @@
 		
 	 function draw_US(){
 		//drawRegionsMap();
+		if(is_playing == 0)
+			 return; 
+							       
 		time = time + 1; 		
 		var data = google.visualization.arrayToDataTable(all_data_sim001[time]);
 		var s =""
@@ -3535,6 +3539,9 @@
 	    
 	 function draw_World(){
 		    
+		if(is_playing == 0)
+			 return; 
+		 
 		time = time + 1; 		
 		dayArr = get_day_data(all_data_world,time);
 		
@@ -3571,6 +3578,15 @@
 	    timer = 0;
 	    view_timer = setInterval(draw_US, 5000);
 	  });
+	    
+	 $("#btn-play").click(function(){
+	    if(is_playing==0)
+		is_playing = 1;
+	    else
+		is_playing = 0; 
+		 
+	  });
+	    
 	}
 	    
 	    
@@ -3629,6 +3645,7 @@
   
 <div id="regions_div" style="width: 100%; height: 500px;"></div>
 <div class="container text-center">
+	<button id="btn-play" type="button" class="btn btn-secondary">Play/Pause</button>
 	<button id="btn-world-data" type="button" class="btn btn-primary">Covid World Spread</button>
 	<button id="btn-US-simulation" type="button" class="btn btn-primary">US Simulation</button>
 </div>
