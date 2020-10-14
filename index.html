@@ -3516,7 +3516,7 @@
 	    tt = setInterval(function(){
 		//drawRegionsMap();
 		time = time + 1; 		
-		data = google.visualization.arrayToDataTable(all_data[time]);
+		var data = google.visualization.arrayToDataTable(all_data[time]);
 		var s =""
 		for (i=0; i< all_data[time].length; i++)
 		{
@@ -3527,7 +3527,7 @@
 		    //console.log(s);
 		//dayArr = get_day_data(all_data,time);
 		
-		var data = google.visualization.arrayToDataTable(dayArr);
+		//var data = google.visualization.arrayToDataTable(dayArr);
 		chart.draw(data, options);
 		}, 3000);
 		
