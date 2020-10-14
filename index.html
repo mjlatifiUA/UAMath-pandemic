@@ -3570,7 +3570,8 @@
 	    draw_World();
 	    timer = 0
 	    is_playing = 1 ;
-	    view_timer = setInterval(draw_World, 5000);
+	    $("#btn-play").text('Pause');
+	    view_timer = setInterval(draw_World, 500);
 	  });
 		
 	 $("#btn-US-simulation").click(function(){
@@ -3579,7 +3580,8 @@
 	    draw_US();
 	    timer = 0;
 	    is_playing = 1 ;
-	    view_timer = setInterval(draw_US, 5000);
+	    $("#btn-play").text('Pause');
+	    view_timer = setInterval(draw_US, 500);
 	  });
 	    
 	 $("#btn-play").click(function(){
