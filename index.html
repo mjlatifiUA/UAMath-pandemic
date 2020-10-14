@@ -3517,11 +3517,14 @@
 		//drawRegionsMap();
 		time = time + 1; 		
 		data = google.visualization.arrayToDataTable(all_data[time]);
+		var s =""
 		for (i=0; i< all_data[time].length; i++)
 		{
-			console.log(all_data[time][i][0]);
-		        console.log(all_data[time][i][1]);
+			s = s+ all_data[time][i][0] + ': '+ all_data[time][i][1];
+			//console.log(all_data[time][i][0]);
+		        //console.log(all_data[time][i][1]);
 		}
+		    //console.log(s);
 		//dayArr = get_day_data(all_data,time);
 		
 		var data = google.visualization.arrayToDataTable(dayArr);
