@@ -93,10 +93,13 @@
           ['France', 600],
           ['RU', 700]
         ],
-	    options: {'title': 'Countries'},
+	    options: {
+			displayMode: 'auto',
+			 colorAxis: {colors: ['white', 'yellow', 'red']}, 		 
+		},
 	    containerId: 'regions_div2'
 	  });
-        wrapper.draw();
+        //wrapper.draw();
 	      
 	setInterval(function(){
 	if(is_playing == 0)
@@ -110,8 +113,8 @@
           ['France', 600],
           ['RU', 700]  ]); 
 		
-	wrapper.setDataTable(dataTable);
-	wrapper.draw();
+	//wrapper.setDataTable(dataTable);
+	//wrapper.draw();
 	}, 2000);
 
 	      
@@ -188,7 +191,9 @@
 			 colorAxis: {colors: ['white', 'yellow', 'red']}, 		 
 		};
 		 
-		chart.draw(data, options);
+		wrapper.setDataTable(data);
+		wrapper.draw();
+		//chart.draw(data, options);
 		
           }
 	  
