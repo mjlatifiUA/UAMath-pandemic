@@ -3568,8 +3568,8 @@
 	 $("#btn-world-data").click(function(){
 	    window.clearInterval(view_timer);
 	    all_data = all_data_world;
-	    draw_World();
-	    time = 0
+	    time = 0;
+	    draw_World();	    
 	    is_playing = 1 ;
 	    $("#btn-play").text('Pause');
 	    view_timer = setInterval(draw_World, 500);
@@ -3578,8 +3578,8 @@
 	 $("#btn-US-simulation").click(function(){
 	    all_data = all_data_sim001;
 	    window.clearInterval(view_timer);
-	    draw_US();
-	    time = 0;
+	     time = 0;
+	    draw_US();	    
 	    is_playing = 1 ;
 	    $("#btn-play").text('Pause');
 	    view_timer = setInterval(draw_US, 500);
