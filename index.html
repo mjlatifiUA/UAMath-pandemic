@@ -24,7 +24,276 @@
 	
 	var all_data;
 	var all_data_world;
-	var all_data_sim001=[
+
+	$.getJSON('world_covid_data.json', function(data) {
+	//$.getJSON('simulation-001.json', function(data) {
+    // JSON result in `data` variable
+	console.log("DATA RECIEVED--------------------");
+	//console.log(data);
+	all_data_world = data;
+	});
+	    
+	    
+	function get_day_data(data, day)
+	    {
+		    //var x = new Date(2019,12,1);
+		    
+		    var x = new Date(2019,12,31);
+		    x.setDate(x.getDate()+day);
+    		    //var str = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
+		    //str = "6/16/2020";
+		    ///x.setDate(x.getDate()+day);
+		    
+		    var Y = x.getYear()+1900;
+		    var M = x.getMonth()+1;
+		    var D = x.getDate();
+		    
+		    
+		    //var str = Y.toString()+"-"+M.toString()+"-"+D.toString();
+		    var str = M.toString()+"/"+D.toString()+"/"+ Y.toString();
+		    $('#date_value').val(str);
+		    //var str = x.toISOString().substr(0,10)
+		    var res = [['Country', 'Cases'], ['fake', 0.0], ['fake2', 7.5]];
+		    
+		    if(all_data == null)
+			    return [];
+		    
+		    all_data.forEach(function(row){
+			    if (row.date == str)
+			    {
+				    res.push([row.location, Math.log( row.total_cases+1)/Math.log(10)]);
+				    console.log(row.location);
+				    console.log(row.total_cases);
+				    console.log(Math.log( row.total_cases+1)/Math.log(10));
+				    
+			    }
+		    });
+		    
+		    return res;
+	    }
+
+	  time = 0
+	  first = true
+	  var view_mode = 'us-sim'; // 'world-data' 
+	  var is_playing = 0;
+      function drawRegionsMap() {
+
+		
+		var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+	      
+	wrapper = new google.visualization.ChartWrapper({
+	    chartType: 'ColumnChart',
+	    dataTable: [['Germany', 'USA', 'Brazil', 'Canada', 'France', 'RU'],
+			[700, 300, 400, 500, 600, 800]],
+	    options: {'title': 'Countries'},
+	    containerId: 'regions_div2'
+	  });
+        wrapper.draw();
+	      
+	setInterval(function(){
+	var dataTable = google.visualization.arrayToDataTable([['Germany', 'USA', 'Brazil', 'Canada', 'France', 'RU'],
+			[700, 300, Math.random()*400 + 400, 800, 600, 800]]); 
+	wrapper.setDataTable(dataTable);
+	wrapper.draw();
+	}, 2000);
+
+	      
+        <!-- var data = google.visualization.arrayToDataTable([ -->
+          <!-- ['Country', 'Popularity'], -->
+          <!-- ['Germany', 200], -->
+          <!-- ['United States', 300], -->
+          <!-- ['Brazil', 400], -->
+          <!-- ['Canada', 500], -->
+          <!-- ['France', 600], -->
+          <!-- ['RU', x] -->
+        <!-- ]); -->
+		
+		//console.log(arr[time][0][1])
+		//console.log(arr[time][1][1])
+		//console.log(arr[time][2][1])
+	      	//dayArr = get_day_data(all_data,time);
+		//var data = google.visualization.arrayToDataTable(dayArr);
+		//time = time+1;
+		
+
+
+        
+
+		 google.visualization.events.addListener(chart, 'ready',
+          function() {
+            //button.disabled = false;
+          });
+		  
+        ///chart.draw(data, options);
+		
+	 function draw_US(){
+		//drawRegionsMap();
+		if(is_playing == 0)
+			 return; 
+							       
+		time = time + 1; 		
+									   
+		var data = google.visualization.arrayToDataTable(all_data_sim001[time]);
+		var s =""
+		for (i=0; i< all_data_sim001[time].length; i++)
+		{
+			s = s+ all_data_sim001[time][i][0] + ': '+ all_data_sim001[time][i][1];
+			//console.log(all_data[time][i][0]);
+		        //console.log(all_data[time][i][1]);
+		}
+		    //console.log(s);
+	        var options = {
+			 region: 'US', 
+			resolution: 'provinces', 
+			displayMode: 'auto',
+		 	colorAxis: {colors: ['white', 'yellow', 'red']}, 		 
+		};
+	       $('#date_value').val(time.toString());
+		chart.draw(data, options);
+		
+		
+          }
+	    
+	 function draw_World(){
+		    
+		if(is_playing == 0)
+			 return; 
+		 
+		time = time + 1; 		
+		dayArr = get_day_data(all_data_world,time);
+		
+		var data = google.visualization.arrayToDataTable(dayArr);
+		 
+		 var options = {
+			 //region: 'US', 
+			//resolution: 'provinces', 
+			displayMode: 'auto',
+			 colorAxis: {colors: ['white', 'yellow', 'red']}, 		 
+		};
+		 
+		chart.draw(data, options);
+		
+          }
+	  
+	  draw_US();
+	    
+	  view_timer = setInterval(draw_US, 5000);
+	    
+	    
+	 $("#btn-world-data").click(function(){
+	    window.clearInterval(view_timer);
+	    all_data = all_data_world;
+	    time = 0;
+	    draw_World();	    
+	    is_playing = 1 ;
+	    $("#btn-play").text('Pause');
+	    view_timer = setInterval(draw_World, 500);
+	  });
+		
+	 $("#btn-US-simulation").click(function(){
+	    all_data = all_data_sim001;
+	    window.clearInterval(view_timer);
+	     time = 0;
+	    draw_US();	    
+	    is_playing = 1 ;
+	    $("#btn-play").text('Pause');
+	    view_timer = setInterval(draw_US, 500);
+	  });
+	    
+	 $("#btn-play").click(function(){
+	    if(is_playing==0)
+	    {
+		is_playing = 1;
+		$("#btn-play").text('Pause');
+	    }
+	    else
+	    {
+		is_playing = 0; 
+		$("#btn-play").text('Play');
+
+	    }
+		 
+	  });
+	    
+	}
+	    
+	    
+	//$(document).ready(function(){
+	
+		
+	//});
+
+    </script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">About</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Covid-19</a></li>
+        <li><a href="#">Background Theory</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron">
+  <div class="container text-center">
+    <h1>Panic Network</h1>      
+    <p>Universitiy of Arizona, Mathematics Department</p>
+  </div>
+</div>
+ 
+<div class="container text-center">	
+	<button id="btn-world-data" type="button" class="btn btn-primary">Covid World Spread</button>
+	<button id="btn-US-simulation" type="button" class="btn btn-primary">US Simulation</button>
+</div>
+	
+<div id="regions_div" style="width: 100%; height: 500px;"></div>
+	
+	
+<div id="regions_div2" style="width: 100%; height: 500px;"></div>
+
+</br>
+<div class="container text-center">	
+	 
+ 	<div class="container text-center"> <button id="btn-play" type="button" class="btn btn-secondary">Play</button> <input id="date_value" value=""></div>
+</div>
+<footer class="container-fluid text-center">
+  <p>This project is supported by a force in @nature.</p>
+</footer>
+
+</body>
+
+<script type="text/javascript">
+		var all_data_sim001=[
 [['State', 'Infection'],
 ['US-AB',  0  ], 
 ['US-AK',  0  ], 
@@ -3427,272 +3696,8 @@
 ],
 ]; 
 	    
-	$.getJSON('world_covid_data.json', function(data) {
-	//$.getJSON('simulation-001.json', function(data) {
-    // JSON result in `data` variable
-	console.log("DATA RECIEVED--------------------");
-	//console.log(data);
-	all_data_world = data;
-	});
-	    
-	    
-	function get_day_data(data, day)
-	    {
-		    //var x = new Date(2019,12,1);
-		    
-		    var x = new Date(2019,12,31);
-		    x.setDate(x.getDate()+day);
-    		    //var str = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
-		    //str = "6/16/2020";
-		    ///x.setDate(x.getDate()+day);
-		    
-		    var Y = x.getYear()+1900;
-		    var M = x.getMonth()+1;
-		    var D = x.getDate();
-		    
-		    
-		    //var str = Y.toString()+"-"+M.toString()+"-"+D.toString();
-		    var str = M.toString()+"/"+D.toString()+"/"+ Y.toString();
-		    $('#date_value').val(str);
-		    //var str = x.toISOString().substr(0,10)
-		    var res = [['Country', 'Cases'], ['fake', 0.0], ['fake2', 7.5]];
-		    
-		    if(all_data == null)
-			    return [];
-		    
-		    all_data.forEach(function(row){
-			    if (row.date == str)
-			    {
-				    res.push([row.location, Math.log( row.total_cases+1)/Math.log(10)]);
-				    console.log(row.location);
-				    console.log(row.total_cases);
-				    console.log(Math.log( row.total_cases+1)/Math.log(10));
-				    
-			    }
-		    });
-		    
-		    return res;
-	    }
+</script>
 
-	  time = 0
-	  first = true
-	  var view_mode = 'us-sim'; // 'world-data' 
-	  var is_playing = 0;
-      function drawRegionsMap() {
-
-		
-		var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-	      
-	wrapper = new google.visualization.ChartWrapper({
-	    chartType: 'ColumnChart',
-	    dataTable: [['Germany', 'USA', 'Brazil', 'Canada', 'France', 'RU'],
-			[700, 300, 400, 500, 600, 800]],
-	    options: {'title': 'Countries'},
-	    containerId: 'regions_div2'
-	  });
-        wrapper.draw();
-	      
-	setTimeout(function(){
-	var dataTable = google.visualization.arrayToDataTable([['Germany', 'USA', 'Brazil', 'Canada', 'France', 'RU'],
-			[700, 300, 800, 800, 600, 800]]); 
-	wrapper.setDataTable(dataTable);
-		
-	}, 2000);
-
-	      
-        <!-- var data = google.visualization.arrayToDataTable([ -->
-          <!-- ['Country', 'Popularity'], -->
-          <!-- ['Germany', 200], -->
-          <!-- ['United States', 300], -->
-          <!-- ['Brazil', 400], -->
-          <!-- ['Canada', 500], -->
-          <!-- ['France', 600], -->
-          <!-- ['RU', x] -->
-        <!-- ]); -->
-		
-		//console.log(arr[time][0][1])
-		//console.log(arr[time][1][1])
-		//console.log(arr[time][2][1])
-	      	//dayArr = get_day_data(all_data,time);
-		//var data = google.visualization.arrayToDataTable(dayArr);
-		//time = time+1;
-		
-
-
-        
-
-		 google.visualization.events.addListener(chart, 'ready',
-          function() {
-            //button.disabled = false;
-          });
-		  
-        ///chart.draw(data, options);
-		
-	 function draw_US(){
-		//drawRegionsMap();
-		if(is_playing == 0)
-			 return; 
-							       
-		time = time + 1; 		
-									   
-		var data = google.visualization.arrayToDataTable(all_data_sim001[time]);
-		var s =""
-		for (i=0; i< all_data_sim001[time].length; i++)
-		{
-			s = s+ all_data_sim001[time][i][0] + ': '+ all_data_sim001[time][i][1];
-			//console.log(all_data[time][i][0]);
-		        //console.log(all_data[time][i][1]);
-		}
-		    //console.log(s);
-	        var options = {
-			 region: 'US', 
-			resolution: 'provinces', 
-			displayMode: 'auto',
-		 	colorAxis: {colors: ['white', 'yellow', 'red']}, 		 
-		};
-	       $('#date_value').val(time.toString());
-		chart.draw(data, options);
-		
-		
-          }
-	    
-	 function draw_World(){
-		    
-		if(is_playing == 0)
-			 return; 
-		 
-		time = time + 1; 		
-		dayArr = get_day_data(all_data_world,time);
-		
-		var data = google.visualization.arrayToDataTable(dayArr);
-		 
-		 var options = {
-			 //region: 'US', 
-			//resolution: 'provinces', 
-			displayMode: 'auto',
-			 colorAxis: {colors: ['white', 'yellow', 'red']}, 		 
-		};
-		 
-		chart.draw(data, options);
-		
-          }
-	  
-	  draw_US();
-	    
-	  view_timer = setInterval(draw_US, 5000);
-	    
-	    
-	 $("#btn-world-data").click(function(){
-	    window.clearInterval(view_timer);
-	    all_data = all_data_world;
-	    time = 0;
-	    draw_World();	    
-	    is_playing = 1 ;
-	    $("#btn-play").text('Pause');
-	    view_timer = setInterval(draw_World, 500);
-	  });
-		
-	 $("#btn-US-simulation").click(function(){
-	    all_data = all_data_sim001;
-	    window.clearInterval(view_timer);
-	     time = 0;
-	    draw_US();	    
-	    is_playing = 1 ;
-	    $("#btn-play").text('Pause');
-	    view_timer = setInterval(draw_US, 500);
-	  });
-	    
-	 $("#btn-play").click(function(){
-	    if(is_playing==0)
-	    {
-		is_playing = 1;
-		$("#btn-play").text('Pause');
-	    }
-	    else
-	    {
-		is_playing = 0; 
-		$("#btn-play").text('Play');
-
-	    }
-		 
-	  });
-	    
-	}
-	    
-	    
-	//$(document).ready(function(){
-	
-		
-	//});
-
-    </script>
-  <style>
-    /* Remove the navbar's default margin-bottom and rounded borders */ 
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
-    
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-  </style>
-</head>
-<body>
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="#">About</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Covid-19</a></li>
-        <li><a href="#">Background Theory</a></li>
-        <li><a href="#">Gallery</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<div class="jumbotron">
-  <div class="container text-center">
-    <h1>Panic Network</h1>      
-    <p>Universitiy of Arizona, Mathematics Department</p>
-  </div>
-</div>
- 
-<div class="container text-center">	
-	<button id="btn-world-data" type="button" class="btn btn-primary">Covid World Spread</button>
-	<button id="btn-US-simulation" type="button" class="btn btn-primary">US Simulation</button>
-</div>
-	
-<div id="regions_div" style="width: 100%; height: 500px;"></div>
-	
-	
-<div id="regions_div2" style="width: 100%; height: 500px;"></div>
-
-</br>
-<div class="container text-center">	
-	 
- 	<div class="container text-center"> <button id="btn-play" type="button" class="btn btn-secondary">Play</button> <input id="date_value" value=""></div>
-</div>
-<footer class="container-fluid text-center">
-  <p>This project is supported by a force in @nature.</p>
-</footer>
-
-</body>
 </html>
 
 
