@@ -103,7 +103,7 @@
 	      
 	setInterval(function(){
 	if(is_playing == 0)
-			 return; 
+		return; 
 	var dataTable = google.visualization.arrayToDataTable([
           ['Country', 'Popularity'],
           ['Germany', 200],
@@ -197,9 +197,9 @@
 		
           }
 	  
-	  draw_US();
+	  //draw_US();
 	    
-	  //view_timer = setInterval(draw_US, 5000);
+	  view_timer = setInterval(draw_World, 5000);
 	    
 	    
 	 $("#btn-world-data").click(function(){
