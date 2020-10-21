@@ -84,8 +84,15 @@
 	      
 	wrapper = new google.visualization.ChartWrapper({
 	    chartType: 'GeoChart',
-	    dataTable: [['Germany', 'USA', 'Brazil', 'Canada', 'France', 'RU'],
-			[700, 300, 400, 500, 600, 800]],
+	    dataTable: [
+          ['Country', 'Popularity'],
+          ['Germany', 200],
+          ['United States', 300],
+          ['Brazil', 400],
+          ['Canada', 500],
+          ['France', 600],
+          ['RU', 700]
+        ],
 	    options: {'title': 'Countries'},
 	    containerId: 'regions_div2'
 	  });
@@ -94,8 +101,15 @@
 	setInterval(function(){
 	if(is_playing == 0)
 			 return; 
-	var dataTable = google.visualization.arrayToDataTable([['Germany', 'USA', 'Brazil', 'Canada', 'France', 'RU'],
-			[700, 300, Math.random()*400 + 400, 800, 600, 800]]); 
+	var dataTable = google.visualization.arrayToDataTable([
+          ['Country', 'Popularity'],
+          ['Germany', 200],
+          ['United States', 300],
+          ['Brazil', Math.random()*400 + 400],
+          ['Canada', 500],
+          ['France', 600],
+          ['RU', 700]  ]); 
+		
 	wrapper.setDataTable(dataTable);
 	wrapper.draw();
 	}, 2000);
