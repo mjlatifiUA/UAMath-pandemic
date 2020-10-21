@@ -11,6 +11,7 @@
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+	    
       google.charts.load('current', {
         'packages':['geochart'],
         // Note: you will need to get a mapsApiKey for your project.
@@ -82,7 +83,7 @@
 		var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
 	      
 	wrapper = new google.visualization.ChartWrapper({
-	    chartType: 'ColumnChart',
+	    chartType: 'geochart',
 	    dataTable: [['Germany', 'USA', 'Brazil', 'Canada', 'France', 'RU'],
 			[700, 300, 400, 500, 600, 800]],
 	    options: {'title': 'Countries'},
@@ -91,6 +92,8 @@
         wrapper.draw();
 	      
 	setInterval(function(){
+	if(is_playing == 0)
+			 return; 
 	var dataTable = google.visualization.arrayToDataTable([['Germany', 'USA', 'Brazil', 'Canada', 'France', 'RU'],
 			[700, 300, Math.random()*400 + 400, 800, 600, 800]]); 
 	wrapper.setDataTable(dataTable);
