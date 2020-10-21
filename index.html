@@ -86,10 +86,7 @@
 	    chartType: 'GeoChart',
 	    dataTable: [
           ['Country', 'Popularity'],
-          ['Germany', 200],
-          ['United States', 300],
-          ['Brazil', 400],
-          ['Canada', 500],
+          ['Germany', 200],        
           ['France', 600],
           ['RU', 700]
         ],
@@ -136,6 +133,26 @@
 		//drawRegionsMap();
 		if(is_playing == 0)
 			 return; 
+					
+		if(time==0)
+		{
+			wrapper = new google.visualization.ChartWrapper({
+			    chartType: 'GeoChart',
+			    dataTable: [
+			  ['Country', 'Popularity'],
+			  ['Germany', 200],        
+			  ['France', 600],
+			  ['RU', 700]
+			],
+			   options :{
+					 region: 'US', 
+					resolution: 'provinces', 
+					displayMode: 'auto',
+					colorAxis: {colors: ['white', 'yellow', 'red']}		 
+				},
+			    containerId: 'regions_div'
+			  });	
+		  }
 							       
 		time = time + 1; 		
 									   
@@ -167,6 +184,23 @@
 		    
 		if(is_playing == 0)
 			 return; 
+		if(time==0)
+		{
+			wrapper = new google.visualization.ChartWrapper({
+			    chartType: 'GeoChart',
+			    dataTable: [
+			  ['Country', 'Popularity'],
+			  ['Germany', 200],        
+			  ['France', 600],
+			  ['RU', 700]
+			],
+			    options: {
+					displayMode: 'auto',
+					 colorAxis: {colors: ['white', 'yellow', 'red']}, 		 
+				},
+			    containerId: 'regions_div'
+			  });	
+		  }
 		 
 		time = time + 1; 		
 		dayArr = get_day_data(all_data_world,time);
