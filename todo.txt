@@ -2,5 +2,5 @@
 * Finalize the map drawing library
 * Implement the simulation as a web server
 * Clarify the details of population simulation (effectiuve population and transition rates)
-
+* Integrate Hanah prediction code
 
