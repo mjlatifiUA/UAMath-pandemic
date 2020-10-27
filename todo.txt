@@ -1,6 +1,6 @@
-Check if google maps charges per frame drawing 
-Finalize the map drawing library
-Implement the simulation as a web server
-Clarify the details of population simulation (effectiuve population and transition rates)
+* Check if google maps charges per frame drawing 
+* Finalize the map drawing library
+* Implement the simulation as a web server
+* Clarify the details of population simulation (effectiuve population and transition rates)
 
 
